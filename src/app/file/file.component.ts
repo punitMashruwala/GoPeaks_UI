@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
-import { Component, OnInit, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ElementRef, HostListener } from '@angular/core';
 import { FileService } from './../file.service';
 import { fileModel } from './fileModel';
 import { Router } from '@angular/router';
@@ -36,25 +36,29 @@ export class FileComponent implements OnInit {
     { "name": "in order to" }
   ];
 
-  triggerList = [{ "name": "given that" },
-  { "name": "cause" },
-  { "name": "causing" },
-  { "name": "led to" },
-  { "name": "leads to" },
-  { "name": "leading to" },
-  { "name": "contribute to" },
-  { "name": "contributed to" },
-  { "name": "contributing to" }]
+  triggerList = [
+    { "name": "given that" },
+    { "name": "cause" },
+    { "name": "causing" },
+    { "name": "led to" },
+    { "name": "leads to" },
+    { "name": "leading to" },
+    { "name": "contribute to" },
+    { "name": "contributed to" },
+    { "name": "contributing to" }
+  ]
 
-  triggerLst = [{ "name": "Because of" },
-  { "name": "consequently" },
-  { "name": "therefore" },
-  { "name": "thus" },
-  { "name": "accordingly" },
-  { "name": "as a consequence" },
-  { "name": "due to" },
-  { "name": "owing to" },
-  { "name": "result from" }]
+  triggerLst = [
+    { "name": "Because of" },
+    { "name": "consequently" },
+    { "name": "therefore" },
+    { "name": "thus" },
+    { "name": "accordingly" },
+    { "name": "as a consequence" },
+    { "name": "due to" },
+    { "name": "owing to" },
+    { "name": "result from" }
+  ]
 
   tableValue = this.triggrlist.length / 9;
   // Inject service 
@@ -94,6 +98,8 @@ export class FileComponent implements OnInit {
     var currentElement = { "name": this.triggerword };
     this.temp.splice(this.temp.length, 0, currentElement);
     console.log(this.temp)
+    document.getElementById('triggerword');
+    this.triggerword = "";
     this.changeDetectorRefs.detectChanges();
   }
 
@@ -101,54 +107,82 @@ export class FileComponent implements OnInit {
   onUpload() {
     this.loading = !this.loading;
     console.log(this.file);
-    this.fileService.upload(this.file).subscribe(
-      (event: any) => {
-        // console.log(event)
-        if (event.fileName) {
-          this.fileModelData.fileName = event.fileName;
-          if (this.defaultFlag) {
-            this.fileModelData.list = "Default"
-          } else {
-            this.fileModelData.list = "Add your own";
-            this.temp.map(x => {
-              this.fileModelData.listArray.push(x.name);
-            })
-          }
-          this.fileService.process(this.fileModelData)
-            .subscribe((response: any) => {
-              // to navigate on next page
-              console.log(response);
+    if (this.file) {
+      if (!this.fileModelData.userName) {
+        alert("Please enter name before clicking upload button!")
+      } else {
+        if (!this.fileModelData.download && !this.fileModelData.editable) {
+          alert("Please Select anyone of the checkbox")
+        } else {
 
-              // console.log(response.FileName.split("/"))
-              if (response.FileName) {
-                // console.log(fileN)
-                this.router.navigate(['/download/'], {
+          this.fileService.upload(this.file).subscribe(
+            (event: any) => {
+              // console.log(event)
+              if (event.fileName) {
+                this.fileModelData.fileName = event.fileName;
+                if (this.defaultFlag) {
+                  this.fileModelData.list = "Default"
+                } else {
+                  this.fileModelData.list = "Add your own";
+                  this.temp.map(x => {
+                    this.fileModelData.listArray.push(x.name);
+                  })
+                }
+                console.log("------------", this.fileModelData)
+                if (!this.fileModelData.download) {
+                  console.log("File Download")
+                  this.fileModelData.download = false
+                }
+                if (!this.fileModelData.editable) {
+                  console.log("File editable")
+                  this.fileModelData.editable = false
+                }
+                this.fileService.process(this.fileModelData)
+                  .subscribe((response: any) => {
+                    // to navigate on next page
+                    console.log(response);
 
-                  queryParams: { "fileName": response.FileName }
-                })
-              } else {
-                console.log("TO DOOO")
+                    // console.log(response.FileName.split("/"))
+                    if (response.downloadFileName && !response.editableFileName) {
+                      // console.log(fileN)
+                      this.router.navigate(['/download/'], {
+
+                        queryParams: { "fileName": response.downloadFileName }
+                      })
+                    } else if (response.editableFileName && !response.downloadFileName) {
+                      // console.log(fileN)
+                      this.router.navigate(['/annotate/'], {
+
+                        queryParams: { "fileName": response.editableFileName }
+                      })
+                    } else {
+                      console.log("TO DOOO")
+                    }
+                  }, (error: HttpErrorResponse) => {
+                    // Handle error
+                    // Use if conditions to check error code, this depends on your api, how it sends error messages
+                  })
               }
-            }, (error: HttpErrorResponse) => {
+            },
+            (error: HttpErrorResponse) => {
               // Handle error
               // Use if conditions to check error code, this depends on your api, how it sends error messages
-            })
+            }
+          );
         }
-      },
-      (error: HttpErrorResponse) => {
-        // Handle error
-        // Use if conditions to check error code, this depends on your api, how it sends error messages
       }
-    );
+    } else {
+      alert("Please Select file and then click upload")
+    }
+
   }
 
-  onTextClick = function (events: any) {
-    console.log(events.target.select());
+  onTextClick(events: any) {
+    var selObj = window.getSelection();
+    console.log(selObj!.toString())
   };
 
-  onClickMe() {
-    console.log(this.elRef.nativeElement.querySelector('newInput'))
-  }
+
 
 
 }

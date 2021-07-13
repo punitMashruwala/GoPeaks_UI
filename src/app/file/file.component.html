@@ -156,11 +156,11 @@
                     <br><br>
                     <div class="row">
                         <div style="display: inline-block;">
-                            <input type="checkbox" id="Download" name="Download" value="Download">
+                            <input type="checkbox" id="Download" name="Download" value="Download" [(ngModel)]="fileModelData.download">
                             <label for="Download"> Download word docx</label> &nbsp; &nbsp; &nbsp;
 
-                            <input type="checkbox" id="Display" name="Display" value="Display">
-                            <label for="Display"> Display only annotated sentences</label>
+                            <input type="checkbox" id="Display" name="Display" value="Display" [(ngModel)]="fileModelData.editable">
+                            <label for="Display"> Display only annotated sentences to annotate it further</label>
                         </div>
 
                     </div>
@@ -176,6 +176,12 @@
                         <div class="col col-4"></div>
 
                     </div>
+
+                    <br><br>
+
+
+                    <p (click)="onTextClick($event)">Hello this is punit testing!</p>
+                    <!-- <input type="text" (click)="onTextClick($event)" /> -->
 
                     <br>
                     <br>

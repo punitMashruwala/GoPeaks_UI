@@ -19,10 +19,8 @@ export class DownloadComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(typeof this.param1)
     this.param1 = this.param1.split("/")[2];
     this.param1 = this.param1.split(".")[0];
-    console.log(this.param1)
     this.fileService.download(this.param1).subscribe((response) => {
       console.log("File is being downloaded");
       // this.downLoadFile(response, "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
