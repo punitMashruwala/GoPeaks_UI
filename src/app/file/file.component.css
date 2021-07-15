@@ -148,7 +148,11 @@ svg.material-icons:not(:last-child) {
 
 .card.card-small {
   height: 16px;
-  width: 168px;
+  width: 200px;
+  background-color: lightblue;
+  text-emphasis-color: white;
+  color: white;
+  text-shadow: 2px 2px 5px black; 
 }
 
 .card-container .card:not(.highlight-card) {

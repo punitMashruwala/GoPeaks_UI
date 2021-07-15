@@ -4,5 +4,6 @@ export class fileModel {
     "userName": string;
     "listArray": [string];
     "download": boolean;
-    "editable": boolean;    
+    "editable": boolean;
+    "radioBoolean": string;    
 }

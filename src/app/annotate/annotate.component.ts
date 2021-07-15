@@ -3,14 +3,13 @@ import { Component, OnInit, SecurityContext } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FileService } from '../file.service';
-
+import { asBlob } from 'html-docx-js-typescript'
+import { FileSaverService } from 'ngx-filesaver';
 
 @Component({
   selector: 'app-annotate',
   templateUrl: './annotate.component.html',
   styleUrls: ['./annotate.component.css']
-  // ,
-  // encapsulation: ViewEncapsulation.None
 })
 export class AnnotateComponent implements OnInit {
 
@@ -27,7 +26,7 @@ export class AnnotateComponent implements OnInit {
   causeFlag = true;
   outputFlag = false; // Flag variable
 
-  constructor(private fileService: FileService, private route: ActivatedRoute, private _sanitizer: DomSanitizer) {
+  constructor(private fileService: FileService, private route: ActivatedRoute, private _sanitizer: DomSanitizer, private fileSaverService: FileSaverService) {
     console.log('Called Constructor');
     this.route.queryParams.subscribe(params => {
       this.param1 = params['fileName'];
@@ -87,7 +86,7 @@ export class AnnotateComponent implements OnInit {
     }
     this.word = "";
     this.data = this.data.replace(this.old_sentence, this.new_sentence);
-  
+
   };
 
 
@@ -105,10 +104,26 @@ export class AnnotateComponent implements OnInit {
     }
   }
 
-  onSaveClick(){
-    console.log("-----------", this.id)
+  onSaveClick() {
     this.dataArray[this.id] = this.data;
-    console.log(this.dataArray)
+  }
+
+  onDownloadClick() {
+    let name = "download.docx";
+    if (this.param1) {
+      name = "annotated_" + this.param1.split("_")[0] + "_" + this.param1.split("_")[1] + ".docx";
+    }
+    let downloadLink = document.createElement('a');
+    this.dataArray.splice(0, 0, `<!DOCTYPE html> <html lang="en">`);
+    this.dataArray.push("</html>");
+    asBlob(this.dataArray.join(" <br> ")).then(data => {
+      downloadLink.href = window.URL.createObjectURL(data);
+      downloadLink.setAttribute('download', name);
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+    });
+
+
   }
 
 }

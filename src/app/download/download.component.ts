@@ -29,8 +29,12 @@ export class DownloadComponent implements OnInit {
       binaryData.push(response);
       let downloadLink = document.createElement('a');
       downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" }));
-      if (this.param1)
-        downloadLink.setAttribute('download', this.param1);
+      if (this.param1) {
+        console.log(this.param1)
+        let name = "annotated_" + this.param1.split("_")[0] + "_" + this.param1.split("_")[1] + ".docx";
+        console.log(name)
+        downloadLink.setAttribute('download', name);
+      }
       document.body.appendChild(downloadLink);
       downloadLink.click();
     },

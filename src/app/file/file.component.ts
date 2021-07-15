@@ -95,12 +95,18 @@ export class FileComponent implements OnInit {
 
   onAddToListClick() {
     // this.temp.push({ "name": this.triggerword })
-    var currentElement = { "name": this.triggerword };
-    this.temp.splice(this.temp.length, 0, currentElement);
-    console.log(this.temp)
-    document.getElementById('triggerword');
-    this.triggerword = "";
-    this.changeDetectorRefs.detectChanges();
+    console.log(this.triggerword)
+    if (!this.triggerword || /^\s*$/.test(this.triggerword)) {
+      console.log(":here")
+
+    } else {
+      var currentElement = { "name": this.triggerword };
+      this.temp.splice(this.temp.length, 0, currentElement);
+      console.log(this.temp)
+      document.getElementById('triggerword');
+      this.triggerword = "";
+      this.changeDetectorRefs.detectChanges();
+    }
   }
 
   // OnClick of button Upload
@@ -111,10 +117,10 @@ export class FileComponent implements OnInit {
       if (!this.fileModelData.userName) {
         alert("Please enter name before clicking upload button!")
       } else {
-        if (!this.fileModelData.download && !this.fileModelData.editable) {
-          alert("Please Select anyone of the checkbox")
+        if (!this.fileModelData.radioBoolean) {
+          alert("Please Select anyone of the radio button")
         } else {
-
+          console.log(this.fileModelData)
           this.fileService.upload(this.file).subscribe(
             (event: any) => {
               // console.log(event)
@@ -128,25 +134,23 @@ export class FileComponent implements OnInit {
                     this.fileModelData.listArray.push(x.name);
                   })
                 }
-                console.log("------------", this.fileModelData)
-                if (!this.fileModelData.download) {
+                if (this.fileModelData.radioBoolean !== "Download") {
                   console.log("File Download")
-                  this.fileModelData.download = false
+                  this.fileModelData.download = false;
+                  this.fileModelData.editable = true;
+
                 }
-                if (!this.fileModelData.editable) {
+                if (this.fileModelData.radioBoolean !== "Display") {
+                  // if (!this.fileModelData.editable) {
                   console.log("File editable")
-                  this.fileModelData.editable = false
+                  this.fileModelData.editable = false;
+                  this.fileModelData.download = true;
                 }
                 this.fileService.process(this.fileModelData)
                   .subscribe((response: any) => {
                     // to navigate on next page
-                    console.log(response);
-
-                    // console.log(response.FileName.split("/"))
                     if (response.downloadFileName && !response.editableFileName) {
-                      // console.log(fileN)
                       this.router.navigate(['/download/'], {
-
                         queryParams: { "fileName": response.downloadFileName }
                       })
                     } else if (response.editableFileName && !response.downloadFileName) {

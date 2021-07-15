@@ -1,0 +1,18 @@
+svg#clouds {
+    position: fixed;
+    bottom: -160px;
+    left: -230px;
+    z-index: -10;
+    width: 1920px;
+}
+
+.new-footer {
+    position: relative;
+    /* height: 125px; */
+    /* background-color: red; */
+    bottom: 20px;
+    left: 0px;
+    right: 0px;
+    margin-bottom: 0px;
+    padding: 10px;
+}

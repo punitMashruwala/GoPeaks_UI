@@ -1,32 +1,8 @@
 <div style="overflow: hidden;">
-    <div class="toolbar" role="banner">
-        <img width="100" alt="Go Peaks Logo" src="/assets/images/goPeaks.jpg" />
-        <!-- <div class="centre">a</div> -->
-        <h2 style="text-align: center;">Welcome </h2>
-
-    </div>
-
-    <br>
-    <br>
-    <br>
-
-    <div class="row">
-        <div class="col col-3"></div>
-        <div class="col col-6">
-            <div class="card highlight-card card-small">
-                <img width="100" alt="Go Peaks Logo" src="/assets/images/goPeaks.jpg" />
-                <span>Annotate Word File - For Data NLP!</span>
-            </div>
-            <div class="col col-3"></div>
-        </div>
-    </div>
-
-
     <div class="body">
 
-
         <div class="row">
-            <div class="col col-4">
+            <div class="col col-5">
                 <!-- <div class="row"> -->
                 <p> Which list of Trigger words for Annotate do you want to be used in this file? </p>
                 <!-- </div> -->
@@ -37,7 +13,7 @@
                         </div>
 
                         <div class="card card-small" (click)="onAddClick()" tabindex="0">
-                            <span> Add your own </span>
+                            <span> Replace list with your own </span>
                         </div>
                     </div>
                 </div>
@@ -46,7 +22,9 @@
                 <div *ngIf="defaultFlag">
                     <div class="col col-1"></div>
                     <div class="col col-10">
-                        <span> Default list </span>
+                        <div style="text-align: center; vertical-align: middle;">
+                            <span style="text-align: center"> Default list </span>
+                        </div>
                         <br> <br>
                         <div class="row" style="text-align: center;
                 vertical-align: middle;">
@@ -95,13 +73,17 @@
                 </div>
 
                 <div *ngIf="addYourOwn" style="text-align: center; vertical-align: middle;">
+                    <div style="text-align: center; vertical-align: middle;">
+                        <span style="text-align: center"> Please enter words in text below and then click add button </span>
+                    </div>
+                    <br>
                     <div class="row">
                         <div class="col col-md"> </div>
                         <div class="col col-md">
                             <input type="text" id="triggerword" name="triggerword" [(ngModel)]="triggerword">
                         </div>
                         <div class="col col-md">
-                            <button (click)="onAddToListClick()" class="btn">Add</button>
+                            <button (click)="onAddToListClick()" class="btn btn-primary">Add</button>
                         </div>
                         <div class="col col-md"></div>
 
@@ -136,18 +118,16 @@
             <div class="col col-1"></div>
             <div class="col col-5">
                 <div class="content" role="main">
-
-                    <br>
                     <h3>Upload the file which needs to be <b> Annotated</b></h3>
                     <br>
                     <input class="form-control" type="file" (change)="onChange($event)">
                     <br><br>
                     <div class="row">
-                        <div class="col col-md"> <span>Please enter user name:</span></div>
-                        <div class="col col-md"> <input type="text" id="userName" name="userName"
+                        <div class="col col-sm"> <span>Please enter user name:</span></div>
+                        <div class="col col-sm"> <input type="text" id="userName" name="userName"
                                 [(ngModel)]="fileModelData.userName">
                         </div>
-                        <div class="col col-md"> (This name will be added as the document name )</div>
+                        <div class="col col-sm"> (This name will be added as the document name )</div>
 
 
                     </div>
@@ -156,39 +136,36 @@
                     <br><br>
                     <div class="row">
                         <div style="display: inline-block;">
-                            <input type="checkbox" id="Download" name="Download" value="Download" [(ngModel)]="fileModelData.download">
-                            <label for="Download"> Download word docx</label> &nbsp; &nbsp; &nbsp;
+                            <form action="">
+                                <input type="radio" id="Download" name="radioData" value="Download"
+                                    ng-control="Download" [(ngModel)]="fileModelData.radioBoolean">
+                                <!-- [(ngModel)]="fileModelData.download"> -->
+                                <label for="Download"> Download word docx</label> &nbsp; &nbsp; &nbsp;
 
-                            <input type="checkbox" id="Display" name="Display" value="Display" [(ngModel)]="fileModelData.editable">
-                            <label for="Display"> Display only annotated sentences to annotate it further</label>
+                                <input type="radio" id="Display" name="radioData" value="Display" ng-control="Display"
+                                    [(ngModel)]="fileModelData.radioBoolean">
+                                <!-- [(ngModel)]="fileModelData.editable"> -->
+                                <label for="Display"> Display only annotated sentences to annotate it further</label>
+                            </form>
                         </div>
+
 
                     </div>
 
                     <br>
                     <div class="row">
-                        <div class="col col-4"></div>
-                        <div class="col col-4">
-                            <button (click)="onUpload()" class="btn btn-success">
-                                Upload
-                            </button>
-                        </div>
-                        <div class="col col-4"></div>
+                        <button (click)="onUpload()" class="btn btn-success">
+                            Upload
+                        </button>
 
                     </div>
-
-                    <br><br>
-
-
-                    <p (click)="onTextClick($event)">Hello this is punit testing!</p>
-                    <!-- <input type="text" (click)="onTextClick($event)" /> -->
 
                     <br>
                     <br>
 
                 </div>
             </div>
-            <div class="col col-2"></div>
+            <div class="col col-1"></div>
         </div>
 
     </div>
@@ -198,29 +175,5 @@
     <br>
     <br>
 
-    <div class="new-footer">
-        All Rights Reserved © 2021
-        <br>
-        <br>
-        Initiative is an end-to-end research initiative to advance and synthesize scientific and technological
-        breakthroughs across disciplines into responsible business decision solutions.
-        <br> It is funded through a hybrid model of research grants, gifts, and entrepreneurship and commercialization
-        efforts
-        (Global Tech Launch).
-        <br>
-        The initiative is part of Dr. Victor Zitian Chen's research portfolio. For any joint research,
-        co-investigators are
-        acknowledged.
-        <br>
-        Inquiries about intellectual property rights, partnerships, and sponsorship may be addressed to researchers
-        primary
-        affiliations.
-    </div>
-    <svg id="clouds" xmlns="http://www.w3.org/2000/svg" width="2611.084" height="485.677"
-        viewBox="0 0 2611.084 485.677">
-        <title>Gray Clouds Background</title>
-        <path id="Path_39" data-name="Path 39"
-            d="M2379.709,863.793c10-93-77-171-168-149-52-114-225-105-264,15-75,3-140,59-152,133-30,2.83-66.725,9.829-93.5,26.25-26.771-16.421-63.5-23.42-93.5-26.25-12-74-77-130-152-133-39-120-212-129-264-15-54.084-13.075-106.753,9.173-138.488,48.9-31.734-39.726-84.4-61.974-138.487-48.9-52-114-225-105-264,15a162.027,162.027,0,0,0-103.147,43.044c-30.633-45.365-87.1-72.091-145.206-58.044-52-114-225-105-264,15-75,3-140,59-152,133-53,5-127,23-130,83-2,42,35,72,70,86,49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33,61.112,8.015,113.854-5.72,150.492-29.764a165.62,165.62,0,0,0,110.861-3.236c47,94,178,113,251,33,31.385,4.116,60.563,2.495,86.487-3.311,25.924,5.806,55.1,7.427,86.488,3.311,73,80,204,61,251-33a165.625,165.625,0,0,0,120,0c51,13,108,15,157-5a147.188,147.188,0,0,0,33.5-18.694,147.217,147.217,0,0,0,33.5,18.694c49,20,106,18,157,5a165.625,165.625,0,0,0,120,0c47,94,178,113,251,33C2446.709,1093.793,2554.709,922.793,2379.709,863.793Z"
-            transform="translate(142.69 -634.312)" fill="#eee" />
-    </svg>
+    
 </div>

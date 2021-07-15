@@ -93,7 +93,7 @@
 
   .card.card-small {
     height: 16px;
-    width: 168px;
+    width: 300px;
   }
 
   .card-container .card:not(.highlight-card) {

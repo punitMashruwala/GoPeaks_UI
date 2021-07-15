@@ -14,6 +14,10 @@ import { FileComponent } from './file/file.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DownloadComponent } from './download/download.component';
 import { AnnotateComponent } from './annotate/annotate.component';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+
+import { FileSaverModule } from 'ngx-filesaver';
 // import { HighlightDirective } from './highlight.directive';
 
 @NgModule({
@@ -23,7 +27,9 @@ import { AnnotateComponent } from './annotate/annotate.component';
     DownloadComponent,
     AnnotateComponent,
     // HighlightDirective
-    NoSanitizePipe
+    NoSanitizePipe,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +39,8 @@ import { AnnotateComponent } from './annotate/annotate.component';
     AppRoutingModule,
     CommonModule,
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    FileSaverModule
   ],
   providers: [],
   bootstrap: [AppComponent]
