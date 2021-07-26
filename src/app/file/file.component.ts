@@ -26,36 +26,36 @@ export class FileComponent implements OnInit {
   triggerword: string = '';
   // userName: string = '';
   triggrlist = [
-     "because of" ,
-     "as a result" ,
-     "thus" ,
-     "hence" ,
-     "so" ,
-     "as" ,
-     "provided that" ,
-     "in order to"
+    "because of",
+    "as a result",
+    "thus",
+    "hence",
+    "so",
+    "as",
+    "provided that",
+    "in order to"
   ];
 
   triggerList = [
-     "given that" ,
-     "cause" ,
-     "led to" ,
-     "leads to" ,
-     "leading to" ,
-     "contribute to" ,
-     "contributed to" ,
-     "contributing to"
+    "given that",
+    "cause",
+    "led to",
+    "leads to",
+    "leading to",
+    "contribute to",
+    "contributed to",
+    "contributing to"
   ]
 
   triggerLst = [
-     "consequently" ,
-     "therefore" ,
-     "thus" ,
-     "accordingly" ,
-     "as a consequence" ,
-     "due to" ,
-     "owing to" ,
-     "result from"
+    "consequently",
+    "therefore",
+    "thus",
+    "accordingly",
+    "as a consequence",
+    "due to",
+    "owing to",
+    "result from"
   ]
 
   tableValue = this.triggrlist.length / 9;
@@ -75,9 +75,7 @@ export class FileComponent implements OnInit {
   }
 
   onDefaultClick() {
-    console.log("herere")
     if (!this.defaultFlag) {
-      console.log("hereressssss")
       this.defaultFlag = true;
       this.addYourOwn = false;
     }
@@ -120,7 +118,7 @@ export class FileComponent implements OnInit {
 
   // OnClick of button Upload
   onUpload() {
-    this.loading = !this.loading;
+    // this.loading = !this.loading;
     if (this.file) {
       if (!this.fileModelData.userName) {
         alert("Please enter name before clicking upload button!")
@@ -128,65 +126,75 @@ export class FileComponent implements OnInit {
         if (!this.fileModelData.radioBoolean) {
           alert("Please Select anyone of the radio button")
         } else {
-          console.log(this.fileModelData)
-          this.fileService.upload(this.file).subscribe(
-            (event: any) => {
-              // console.log(event)
-              if (event.fileName) {
-                this.fileModelData.fileName = event.fileName;
-                if (this.defaultFlag) {
-                  this.fileModelData.list = "Default"
-                } else {
-                  this.fileModelData.list = "Add your own";
-                  this.temp.map(x => {
-                    this.fileModelData.listArray.push(x);
-                  })
-                }
-                if (this.fileModelData.radioBoolean !== "Download") {
-                  console.log("File Download")
-                  this.fileModelData.download = false;
-                  this.fileModelData.editable = true;
-
-                }
-                if (this.fileModelData.radioBoolean !== "Display") {
-                  // if (!this.fileModelData.editable) {
-                  console.log("File editable")
-                  this.fileModelData.editable = false;
-                  this.fileModelData.download = true;
-                }
-                this.fileService.process(this.fileModelData)
-                  .subscribe((response: any) => {
-                    this.loading = !this.loading;
-                    // to navigate on next page
-                    if (response.downloadFileName && !response.editableFileName) {
-                      this.router.navigate(['/download/'], {
-                        queryParams: { "fileName": response.downloadFileName }
-                      })
-                    } else if (response.editableFileName && !response.downloadFileName) {
-                      // console.log(fileN)
-                      this.router.navigate(['/annotate/'], {
-
-                        queryParams: { "fileName": response.editableFileName }
-                      })
+          if (this.file.name) {
+            console.log(this.file.name.split(".")[this.file.name.split(".").length - 1])
+            if (this.file.name.split(".")[this.file.name.split(".").length - 1] == "docx" ||
+              this.file.name.split(".")[this.file.name.split(".").length - 1] == "pdf" ||
+              this.file.name.split(".")[this.file.name.split(".").length - 1] == "doc") {
+              this.fileService.upload(this.file).subscribe(
+                (event: any) => {
+                  if (event.fileName) {
+                    this.fileModelData.fileName = event.fileName;
+                    if (this.defaultFlag) {
+                      this.fileModelData.list = "Default"
                     } else {
-                      console.log("TO DOOO");
-                      alert("Something went worng! Please try again later");
+                      this.fileModelData.list = "Add your own";
+                      this.temp.map(x => {
+                        this.fileModelData.listArray.push(x);
+                      })
                     }
-                  }, (error: HttpErrorResponse) => {
-                    console.log(error);
-                    alert("Something went worng! Please try again later");
-                    // Handle error
-                    // Use if conditions to check error code, this depends on your api, how it sends error messages
-                  })
-              }
-            },
-            (error: HttpErrorResponse) => {
-              console.log(error);
-              alert("Something went worng! Please try again later");
-              // Handle error
-              // Use if conditions to check error code, this depends on your api, how it sends error messages
+                    if (this.fileModelData.radioBoolean !== "Download") {
+                      console.log("File Download")
+                      this.fileModelData.download = false;
+                      this.fileModelData.editable = true;
+
+                    }
+                    if (this.fileModelData.radioBoolean !== "Display") {
+                      // if (!this.fileModelData.editable) {
+                      console.log("File editable")
+                      this.fileModelData.editable = false;
+                      this.fileModelData.download = true;
+                    }
+                    this.fileService.process(this.fileModelData)
+                      .subscribe((response: any) => {
+                        this.loading = !this.loading;
+                        // to navigate on next page
+                        if (response.downloadFileName && !response.editableFileName) {
+                          this.router.navigate(['/download/'], {
+                            queryParams: { "fileName": response.downloadFileName }
+                          })
+                        } else if (response.editableFileName && !response.downloadFileName) {
+                          // console.log(fileN)
+                          this.router.navigate(['/annotate/'], {
+
+                            queryParams: { "fileName": response.editableFileName }
+                          })
+                        } else {
+                          console.log("TO DOOO");
+                          alert("Something went worng! Please try again later");
+                        }
+                      }, (error: HttpErrorResponse) => {
+                        console.log(error);
+                        alert("Something went worng! Please try again later");
+                        // Handle error
+                        // Use if conditions to check error code, this depends on your api, how it sends error messages
+                      })
+                  }
+                },
+                (error: HttpErrorResponse) => {
+                  console.log(error);
+                  alert("Something went worng! Please try again later");
+                  // Handle error
+                  // Use if conditions to check error code, this depends on your api, how it sends error messages
+                }
+              );
+            } else {
+              alert("Please Select Only PDF or Docx file!")
             }
-          );
+          } else {
+            alert("Please Select Only PDF or Docx file!")
+          }
+
         }
       }
     } else {
