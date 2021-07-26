@@ -16,48 +16,46 @@ export class FileComponent implements OnInit {
   displayedColumns = ['name'];
   // Variable to store shortLink from api response
   shortLink: string = "";
+  // loading = true; // Flag variable
   loading = false; // Flag variable
   file!: File; // Variable to store file
   // Variable to store file
   defaultFlag = true;
   addYourOwn = false; // Flag variable
-  temp = [{ "name": "hence" }];
+  temp = ["hence"];
   triggerword: string = '';
   // userName: string = '';
   triggrlist = [
-    { "name": "because of" },
-    { "name": "as a result" },
-    { "name": "thus" },
-    { "name": "hence" },
-    { "name": "because" },
-    { "name": "so" },
-    { "name": "as" },
-    { "name": "provided that" },
-    { "name": "in order to" }
+     "because of" ,
+     "as a result" ,
+     "thus" ,
+     "hence" ,
+     "so" ,
+     "as" ,
+     "provided that" ,
+     "in order to"
   ];
 
   triggerList = [
-    { "name": "given that" },
-    { "name": "cause" },
-    { "name": "causing" },
-    { "name": "led to" },
-    { "name": "leads to" },
-    { "name": "leading to" },
-    { "name": "contribute to" },
-    { "name": "contributed to" },
-    { "name": "contributing to" }
+     "given that" ,
+     "cause" ,
+     "led to" ,
+     "leads to" ,
+     "leading to" ,
+     "contribute to" ,
+     "contributed to" ,
+     "contributing to"
   ]
 
   triggerLst = [
-    { "name": "Because of" },
-    { "name": "consequently" },
-    { "name": "therefore" },
-    { "name": "thus" },
-    { "name": "accordingly" },
-    { "name": "as a consequence" },
-    { "name": "due to" },
-    { "name": "owing to" },
-    { "name": "result from" }
+     "consequently" ,
+     "therefore" ,
+     "thus" ,
+     "accordingly" ,
+     "as a consequence" ,
+     "due to" ,
+     "owing to" ,
+     "result from"
   ]
 
   tableValue = this.triggrlist.length / 9;
@@ -94,15 +92,26 @@ export class FileComponent implements OnInit {
 
 
   onAddToListClick() {
-    // this.temp.push({ "name": this.triggerword })
-    console.log(this.triggerword)
     if (!this.triggerword || /^\s*$/.test(this.triggerword)) {
-      console.log(":here")
-
+      // do nothing
     } else {
-      var currentElement = { "name": this.triggerword };
-      this.temp.splice(this.temp.length, 0, currentElement);
-      console.log(this.temp)
+      if (this.triggerword.indexOf(",") != -1) {
+        let list = this.triggerword.split(",");
+
+        list.map(e => {
+          if (!e || /^\s*$/.test(e)) {
+            // do nothing
+          } else {
+            if (this.temp.indexOf(e) == -1) {
+              this.temp.push(e)
+            }
+          }
+        })
+      } else {
+        if (this.temp.indexOf(this.triggerword) == -1) {
+          this.temp.push(this.triggerword)
+        }
+      }
       document.getElementById('triggerword');
       this.triggerword = "";
       this.changeDetectorRefs.detectChanges();
@@ -112,7 +121,6 @@ export class FileComponent implements OnInit {
   // OnClick of button Upload
   onUpload() {
     this.loading = !this.loading;
-    console.log(this.file);
     if (this.file) {
       if (!this.fileModelData.userName) {
         alert("Please enter name before clicking upload button!")
@@ -131,7 +139,7 @@ export class FileComponent implements OnInit {
                 } else {
                   this.fileModelData.list = "Add your own";
                   this.temp.map(x => {
-                    this.fileModelData.listArray.push(x.name);
+                    this.fileModelData.listArray.push(x);
                   })
                 }
                 if (this.fileModelData.radioBoolean !== "Download") {
@@ -148,6 +156,7 @@ export class FileComponent implements OnInit {
                 }
                 this.fileService.process(this.fileModelData)
                   .subscribe((response: any) => {
+                    this.loading = !this.loading;
                     // to navigate on next page
                     if (response.downloadFileName && !response.editableFileName) {
                       this.router.navigate(['/download/'], {
@@ -160,15 +169,20 @@ export class FileComponent implements OnInit {
                         queryParams: { "fileName": response.editableFileName }
                       })
                     } else {
-                      console.log("TO DOOO")
+                      console.log("TO DOOO");
+                      alert("Something went worng! Please try again later");
                     }
                   }, (error: HttpErrorResponse) => {
+                    console.log(error);
+                    alert("Something went worng! Please try again later");
                     // Handle error
                     // Use if conditions to check error code, this depends on your api, how it sends error messages
                   })
               }
             },
             (error: HttpErrorResponse) => {
+              console.log(error);
+              alert("Something went worng! Please try again later");
               // Handle error
               // Use if conditions to check error code, this depends on your api, how it sends error messages
             }

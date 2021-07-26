@@ -24,10 +24,11 @@ export class AnnotateComponent implements OnInit {
 
   word: string = "";
   causeFlag = true;
-  outputFlag = false; // Flag variable
+  outcomeFlag = false; // Flag variable
+
+  arraylength = 0;
 
   constructor(private fileService: FileService, private route: ActivatedRoute, private _sanitizer: DomSanitizer, private fileSaverService: FileSaverService) {
-    console.log('Called Constructor');
     this.route.queryParams.subscribe(params => {
       this.param1 = params['fileName'];
     });
@@ -45,12 +46,17 @@ export class AnnotateComponent implements OnInit {
   getData() {
     this.fileService.getData(this.param1).subscribe((response) => {
       this.dataArray = response.data;
-      this.dataArray.forEach(x => {
-
-        x = x.replace(/\\"/g, '"');
-        x = this.sanitizedHtmlProperty(x);
-      })
-      this.dataArray_backup = this.dataArray;
+      if (this.dataArray[0].indexOf("10K")) {
+        this.dataArray.splice(0, 1);
+      }
+      this.arraylength = this.dataArray.length;
+      this.dataArray.forEach(element => {
+        console.log(element)
+        element = element.replace("<p>", "");
+        element = element.replace("</p>", "");
+        console.log(element)
+      });
+      this.dataArray = this.dataArray;
     });
   }
 
@@ -59,14 +65,20 @@ export class AnnotateComponent implements OnInit {
   }
 
   onClick(event: any) {
-    this.data = event.srcElement.outerHTML;
+    // this.data = event.srcElement.outerHTML;
 
     let target = event.currentTarget;
     let idAttr = target.attributes.id;
     let id = Number(idAttr.nodeValue);
-    console.log(typeof id);
+    console.log(id);
     this.id = id;
+    this.data = this.dataArray[id]
+  }
 
+  onRemoveClick(id: any) {
+    console.log(id)
+    this.dataArray.splice(id, 1);
+    this.arraylength = this.dataArray.length;
   }
 
 
@@ -75,14 +87,15 @@ export class AnnotateComponent implements OnInit {
     console.log(selObj!.toString())
     this.old_sentence = selObj!.toString();
     console.log(this.causeFlag)
-    console.log(this.outputFlag)
-
+    console.log(this.outcomeFlag)
+    console.log("-------- this.old_sentence -----------", this.old_sentence)
+    debugger;
     if (this.causeFlag) {
       this.word = "cause";
-      this.new_sentence = `<font style="color:green;"> &lt;${this.word}&gt ${this.old_sentence}&lt/${this.word}&gt </font>`;
-    } else if (this.outputFlag) {
-      this.word = "output";
-      this.new_sentence = `<font style="color:blue;"> &lt;${this.word}&gt ${this.old_sentence}&lt/${this.word}&gt </font>`;
+      this.new_sentence = `<font style="color:green;"> &lt;${this.word}&gt ${this.old_sentence} &lt/${this.word}&gt </font>`;
+    } else if (this.outcomeFlag) {
+      this.word = "outcome";
+      this.new_sentence = `<font style="color:blue;"> &lt;${this.word}&gt ${this.old_sentence} &lt/${this.word}&gt </font>`;
     }
     this.word = "";
     this.data = this.data.replace(this.old_sentence, this.new_sentence);
@@ -93,19 +106,21 @@ export class AnnotateComponent implements OnInit {
   onCauseClick() {
     if (!this.causeFlag) {
       this.causeFlag = true;
-      this.outputFlag = false;
+      this.outcomeFlag = false;
     }
   }
 
-  onOutputClick() {
-    if (!this.outputFlag) {
+  onoutcomeClick() {
+    if (!this.outcomeFlag) {
       this.causeFlag = false;
-      this.outputFlag = true;
+      this.outcomeFlag = true;
     }
   }
 
   onSaveClick() {
     this.dataArray[this.id] = this.data;
+    this.data = "";
+    this.id = "";
   }
 
   onDownloadClick() {

@@ -1,20 +1,22 @@
 <div style="overflow: hidden;">
     <div class="body">
         <div class="row">
-            <div class="col col-md-1"></div>
 
-            <div class="col col-md-3">
-                Please click on sentence to select from list of data given below!
-                <br>
-                <br>
+            <div class="col col-md-3" style="width: 500px;left: 3%;">
+                <span> Please click on sentence to select from list of data given below!
+                    <br> Number of records found: {{arraylength}}</span>
 
-                <div *ngFor="let row of dataArray; let i = index">
-                    <!-- <p id={{i}} [innerHTML]="row" (click)="onClick(this.id)"></p> -->
-                    <div id={{i}} [innerHTML]="row | noSanitize" (click)="onClick($event)"></div>
-                    <br>
+                <div style="overflow-y: auto; height: 550px; width: 500px;">
+                    <div *ngFor="let row of dataArray; let i = index" style="text-align: justify; font-size:smaller; ">
+                        <div id={{i}} [innerHTML]="row | noSanitize" (click)="onClick($event)"> </div>
+                        <button class="btn btn-link" (click)="onRemoveClick(i)"> Remove </button>
+                        <br><br>
+                        
+                    </div>
                 </div>
 
             </div>
+            <div class="col col-md-1"></div>
             <div class="col col-md-1"></div>
 
             <div class="col col-md-7">
@@ -26,7 +28,7 @@
                     &nbsp;
                     &nbsp;
                     &nbsp;
-                    <button (click)="onOutputClick()" class="btn btn-primary">Output</button>
+                    <button (click)="onoutcomeClick()" class="btn btn-primary">Outcome</button>
                 </div>
                 <br>
                 <br>
@@ -42,12 +44,12 @@
                         <button *ngIf="this.data" (click)="onSaveClick()" class="btn btn-success"> Save changes to data
                             list</button>
                     </div>
-                    
+
                 </div>
                 <br>
                 <br>
                 <div class="row">
-                    <button  (click)="onDownloadClick()" class="btn btn-success"> Download data </button>
+                    <button (click)="onDownloadClick()" class="btn btn-success"> Download data </button>
                 </div>
             </div>
         </div>
@@ -59,5 +61,5 @@
     <br>
     <br>
 
-
+    <app-footer></app-footer>
 </div>

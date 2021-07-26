@@ -54,12 +54,6 @@ h6 {
   margin: 8px 0;
 }
 
-p {
-  margin: 0;
-  padding: 30px;;
-  position: relative; 
-  word-break: keep-all; 
-}
 
 .spacer {
   flex: 1;

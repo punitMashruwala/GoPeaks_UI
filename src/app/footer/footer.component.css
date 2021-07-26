@@ -10,7 +10,8 @@ svg#clouds {
     position: relative;
     /* height: 125px; */
     /* background-color: red; */
-    bottom: 20px;
+    font-size: xx-small;
+    bottom: 0px;
     left: 0px;
     right: 0px;
     margin-bottom: 0px;

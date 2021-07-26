@@ -1,179 +1,242 @@
 <div style="overflow: hidden;">
-    <div class="body">
+    <div *ngIf="!loading">
+        <div class="body">
 
-        <div class="row">
-            <div class="col col-5">
-                <!-- <div class="row"> -->
-                <p> Which list of Trigger words for Annotate do you want to be used in this file? </p>
-                <!-- </div> -->
-                <div class="row" style="padding-left: 35px;">
-                    <div class="card-container">
-                        <div class="card card-small" (click)="onDefaultClick()" tabindex="0">
-                            <span> Default List </span>
-                        </div>
+            <div class="row">
+                <div class="col col-5">
+                    <div class="row" style="padding-left: 35px;">
+                        Which list of Trigger words for Annotate do you want to be used in this file? 
+                        <div class="card-container">
+                            <div class="card card-small" (click)="onDefaultClick()" tabindex="0">
+                                <span> Default List </span>
+                            </div>
 
-                        <div class="card card-small" (click)="onAddClick()" tabindex="0">
-                            <span> Replace list with your own </span>
+                            <div class="card card-small" (click)="onAddClick()" tabindex="0">
+                                <span> Replace list with your own </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <br>
-                <br>
-                <div *ngIf="defaultFlag">
-                    <div class="col col-1"></div>
-                    <div class="col col-10">
+                    <br>
+                    <div *ngIf="defaultFlag">
+                        <div class="col col-1"></div>
+                        <div class="col col-10">
+                            <div style="text-align: center; vertical-align: middle;">
+                                <span style="text-align: center"> Default list </span>
+                            </div>
+                            <br> <br>
+                            <div class="row" style="text-align: center; vertical-align: middle;">
+                                <div class="col col-4">
+                                    <table>
+                                        <thead>
+                                            <tr><b>Name</b></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let row of triggrlist; let i = index">
+                                                <!-- <td>{{i + 1}}</td> -->
+                                                <td> {{row}} </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col col-4">
+                                    <table>
+                                        <thead>
+                                            <tr><b>Name</b></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let row of triggerList; let i = index">
+                                                <!-- <td>{{i + 1}}</td> -->
+                                                <td> {{row}} </td>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col col-4">
+                                    <table>
+                                        <thead>
+                                            <tr><b>Name</b></tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr *ngFor="let row of triggerLst; let i = index">
+                                                <!-- <td>{{i + 1}}</td> -->
+                                                <td> {{row}} </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col col-1"></div>
+                    </div>
+
+                    <div *ngIf="addYourOwn" style="text-align: center; vertical-align: middle;">
                         <div style="text-align: center; vertical-align: middle;">
-                            <span style="text-align: center"> Default list </span>
+                            <span style="text-align: center"> Please enter words in text below and then click add button
+                            </span>
                         </div>
-                        <br> <br>
-                        <div class="row" style="text-align: center;
-                vertical-align: middle;">
-                            <div class="col col-4">
+                        <br>
+                        <div class="row">
+                            <div class="col col-md"> </div>
+                            <div class="col col-md">
+                                <input type="text" id="triggerword" name="triggerword" [(ngModel)]="triggerword">
+                            </div>
+                            <div class="col col-md">
+                                <button (click)="onAddToListClick()" class="btn btn-primary">Add</button>
+                            </div>
+                            <div class="col col-md"></div>
+
+                        </div>
+
+
+                        <br>
+                        <br>
+
+                        <div class="row">
+                            <div class="col col-md"> </div>
+                            <div class="col col-md">
                                 <table>
                                     <thead>
-                                        <tr><b>Name</b></tr>
+                                        <td> <b>Name</b></td>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let row of triggrlist; let i = index">
+                                        <tr *ngFor="let row of temp; let i = index">
                                             <!-- <td>{{i + 1}}</td> -->
-                                            <td> {{row.name}} </td>
+                                            <td> {{row}} </td>
                                         </tr>
                                     </tbody>
-                                </table>
-                            </div>
-                            <div class="col col-4">
-                                <table>
-                                    <thead>
-                                        <tr><b>Name</b></tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let row of triggerList; let i = index">
-                                            <!-- <td>{{i + 1}}</td> -->
-                                            <td> {{row.name}} </td>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="col col-4">
-                                <table>
-                                    <thead>
-                                        <tr><b>Name</b></tr>
-                                    </thead>
-                                    <tbody>
 
-                                        <tr *ngFor="let row of triggerLst; let i = index">
-                                            <!-- <td>{{i + 1}}</td> -->
-                                            <td> {{row.name}} </td>
-                                        </tr>
-                                    </tbody>
                                 </table>
                             </div>
+                            <div class="col col-md"> </div>
                         </div>
+
                     </div>
-                    <div class="col col-1"></div>
                 </div>
 
-                <div *ngIf="addYourOwn" style="text-align: center; vertical-align: middle;">
-                    <div style="text-align: center; vertical-align: middle;">
-                        <span style="text-align: center"> Please enter words in text below and then click add button </span>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col col-md"> </div>
-                        <div class="col col-md">
-                            <input type="text" id="triggerword" name="triggerword" [(ngModel)]="triggerword">
+                <div class="col col-1"></div>
+                <div class="col col-5">
+                    <div class="content" role="main">
+                        <h3>Upload the file which needs to be <b> Annotated</b></h3>
+                        <br>
+                        <input class="form-control" type="file" (change)="onChange($event)">
+                        <small style="color: red;">* The software now only accepts pdf and word docx </small>
+                        <br><br>
+                        <div class="row">
+                            <div class="col col-sm-7"> <span>User-name:</span> &nbsp;  <input type="text" id="userName" name="userName"
+                                    [(ngModel)]="fileModelData.userName">
+                            </div>
+                            <div class="col col-sm-5"> <small style="color: blue;">This name will be added as the document name </small>
+                            </div>
+
+
                         </div>
-                        <div class="col col-md">
-                            <button (click)="onAddToListClick()" class="btn btn-primary">Add</button>
+
+
+                        <br><br>
+                        <div class="row">
+                            <div style="display: inline-block;">
+                                <form action="">
+                                    <input type="radio" id="Download" name="radioData" value="Download"
+                                        ng-control="Download" [(ngModel)]="fileModelData.radioBoolean">
+                                    <!-- [(ngModel)]="fileModelData.download"> -->
+                                    <label for="Download"> Download word docx</label> &nbsp; &nbsp; &nbsp;
+
+                                    <input type="radio" id="Display" name="radioData" value="Display"
+                                        ng-control="Display" [(ngModel)]="fileModelData.radioBoolean">
+                                    <!-- [(ngModel)]="fileModelData.editable"> -->
+                                    <label for="Display"> Display only annotated sentences to annotate it
+                                        further</label>
+                                </form>
+                            </div>
+
+
                         </div>
-                        <div class="col col-md"></div>
+
+                        <br>
+                        <div class="row">
+                            <button (click)="onUpload()" class="btn btn-success" [disabled]='loading'>
+                                Upload
+                            </button>
+
+                        </div>
+
+                        <br>
+                        <br>
 
                     </div>
-
-
-                    <br>
-                    <br>
-
-                    <div class="row">
-                        <div class="col col-md"> </div>
-                        <div class="col col-md">
-                            <table>
-                                <thead>
-                                    <td> <b>Name</b></td>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let row of temp; let i = index">
-                                        <!-- <td>{{i + 1}}</td> -->
-                                        <td> {{row.name}} </td>
-                                    </tr>
-                                </tbody>
-
-                            </table>
-                        </div>
-                        <div class="col col-md"> </div>
-                    </div>
-
                 </div>
+                <div class="col col-1"></div>
             </div>
 
-            <div class="col col-1"></div>
-            <div class="col col-5">
-                <div class="content" role="main">
-                    <h3>Upload the file which needs to be <b> Annotated</b></h3>
-                    <br>
-                    <input class="form-control" type="file" (change)="onChange($event)">
-                    <br><br>
-                    <div class="row">
-                        <div class="col col-sm"> <span>Please enter user name:</span></div>
-                        <div class="col col-sm"> <input type="text" id="userName" name="userName"
-                                [(ngModel)]="fileModelData.userName">
-                        </div>
-                        <div class="col col-sm"> (This name will be added as the document name )</div>
-
-
-                    </div>
-
-
-                    <br><br>
-                    <div class="row">
-                        <div style="display: inline-block;">
-                            <form action="">
-                                <input type="radio" id="Download" name="radioData" value="Download"
-                                    ng-control="Download" [(ngModel)]="fileModelData.radioBoolean">
-                                <!-- [(ngModel)]="fileModelData.download"> -->
-                                <label for="Download"> Download word docx</label> &nbsp; &nbsp; &nbsp;
-
-                                <input type="radio" id="Display" name="radioData" value="Display" ng-control="Display"
-                                    [(ngModel)]="fileModelData.radioBoolean">
-                                <!-- [(ngModel)]="fileModelData.editable"> -->
-                                <label for="Display"> Display only annotated sentences to annotate it further</label>
-                            </form>
-                        </div>
-
-
-                    </div>
-
-                    <br>
-                    <div class="row">
-                        <button (click)="onUpload()" class="btn btn-success">
-                            Upload
-                        </button>
-
-                    </div>
-
-                    <br>
-                    <br>
-
-                </div>
-            </div>
-            <div class="col col-1"></div>
         </div>
-
     </div>
+    <div *ngIf="loading" class="body" style="padding-left: 50%;">
+        <div class="loadingio-spinner-rolling-sysqqssruh">
+            <div class="ldio-iut9gfb9t88">
+                <div></div>
+            </div>
+        </div>
+        <style type="text/css">
+            @keyframes ldio-iut9gfb9t88 {
+                0% {
+                    transform: translate(-50%, -50%) rotate(0deg);
+                }
 
+                100% {
+                    transform: translate(-50%, -50%) rotate(360deg);
+                }
+            }
 
+            .ldio-iut9gfb9t88 div {
+                top: 50%;
+                left: 50%;
+                position: fixed;
+                width: 120px;
+                height: 120px;
+                border: 4px solid #1d3f72;
+                border-top-color: transparent;
+                border-radius: 50%;
+            }
+
+            .ldio-iut9gfb9t88 div {
+                animation: ldio-iut9gfb9t88 1s linear infinite;
+                top: 50%;
+                left: 50%;
+            }
+
+            .loadingio-spinner-rolling-sysqqssruh {
+                top: 50%;
+                left: 50%;
+                width: 200px;
+                height: 200px;
+                display: inline-block;
+                overflow: hidden;
+                /* background: #f1f2f3; */
+            }
+
+            .ldio-iut9gfb9t88 {
+
+                width: 100%;
+                height: 100%;
+                position: relative;
+                transform: translateZ(0) scale(1);
+                backface-visibility: hidden;
+                transform-origin: 0 0;
+                /* see note above */
+            }
+
+            .ldio-iut9gfb9t88 div {
+                box-sizing: content-box;
+            }
+
+            /* generated by https://loading.io/ */
+        </style>
+    </div>
     <br>
     <br>
     <br>
-
-    
+    <app-footer></app-footer>
 </div>
+
+
+<!-- </div> -->
