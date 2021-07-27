@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col col-5">
                     <div class="row" style="padding-left: 35px;">
-                        Which list of Trigger words for Annotate do you want to be used in this file? 
+                        Which list of Trigger words for Annotate do you want to be used in this file?
                         <div class="card-container">
                             <div class="card card-small" (click)="onDefaultClick()" tabindex="0">
                                 <span> Default List </span>
@@ -69,23 +69,30 @@
                         <div class="col col-1"></div>
                     </div>
 
-                    <div *ngIf="addYourOwn" style="text-align: center; vertical-align: middle;">
+                    <div *ngIf="addYourOwn" >
                         <div style="text-align: center; vertical-align: middle;">
                             <span style="text-align: center"> Please enter words in text below and then click add button
                             </span>
                         </div>
+
+                        
                         <br>
                         <div class="row">
                             <div class="col col-md"> </div>
                             <div class="col col-md">
                                 <input type="text" id="triggerword" name="triggerword" [(ngModel)]="triggerword">
+                                
                             </div>
                             <div class="col col-md">
                                 <button (click)="onAddToListClick()" class="btn btn-primary">Add</button>
                             </div>
                             <div class="col col-md"></div>
+                            
 
                         </div>
+                        <!-- style="text-align: center; vertical-align: middle;" -->
+                        <small style="color: red;padding-left: 20%;">
+                                    * You can add multiple words using " , " (comma)  </small>
 
 
                         <br>
@@ -122,10 +129,11 @@
                         <small style="color: red;">* The software now only accepts pdf and word docx </small>
                         <br><br>
                         <div class="row">
-                            <div class="col col-sm-7"> <span>User-name:</span> &nbsp;  <input type="text" id="userName" name="userName"
-                                    [(ngModel)]="fileModelData.userName">
+                            <div class="col col-sm-7"> <span>User-name:</span> &nbsp; <input type="text" id="userName"
+                                    name="userName" [(ngModel)]="fileModelData.userName">
                             </div>
-                            <div class="col col-sm-5"> <small style="color: blue;">This name will be added as the document name </small>
+                            <div class="col col-sm-5"> <small style="color: blue;">This name will be added as the
+                                    document name </small>
                             </div>
 
 

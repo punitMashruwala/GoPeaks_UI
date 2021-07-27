@@ -118,7 +118,7 @@ export class FileComponent implements OnInit {
 
   // OnClick of button Upload
   onUpload() {
-    // this.loading = !this.loading;
+    this.loading = !this.loading;
     if (this.file) {
       if (!this.fileModelData.userName) {
         alert("Please enter name before clicking upload button!")
@@ -139,8 +139,14 @@ export class FileComponent implements OnInit {
                       this.fileModelData.list = "Default"
                     } else {
                       this.fileModelData.list = "Add your own";
+
                       this.temp.map(x => {
-                        this.fileModelData.listArray.push(x);
+                        if (!this.fileModelData.listArray) {
+                          this.fileModelData.listArray = [x]
+                        } else {
+                          this.fileModelData.listArray.push(x);
+                        }
+
                       })
                     }
                     if (this.fileModelData.radioBoolean !== "Download") {
