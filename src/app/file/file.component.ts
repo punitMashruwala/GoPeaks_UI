@@ -24,6 +24,8 @@ export class FileComponent implements OnInit {
   addYourOwn = false; // Flag variable
   temp = ["hence"];
   triggerword: string = '';
+  stoppedword: string = "";
+  stopWordList: Array<string> = [];
   // userName: string = '';
   triggrlist = [
     "because of",
@@ -116,6 +118,33 @@ export class FileComponent implements OnInit {
     }
   }
 
+  onAddToStopListClick() {
+    if (!this.stoppedword || /^\s*$/.test(this.stoppedword)) {
+      // do nothing
+    } else {
+      if (this.stoppedword.indexOf(",") != -1) {
+        let list = this.stoppedword.split(",");
+
+        list.map(e => {
+          if (!e || /^\s*$/.test(e)) {
+            // do nothing
+          } else {
+            if (this.stopWordList.indexOf(e) == -1) {
+              this.stopWordList.push(e)
+            }
+          }
+        })
+      } else {
+        if (this.stopWordList.indexOf(this.stoppedword) == -1) {
+          this.stopWordList.push(this.stoppedword)
+        }
+      }
+      document.getElementById('stoppedword');
+      this.stoppedword = "";
+      this.changeDetectorRefs.detectChanges();
+    }
+  }
+
   // OnClick of button Upload
   onUpload() {
     this.loading = !this.loading;
@@ -127,7 +156,6 @@ export class FileComponent implements OnInit {
           alert("Please Select anyone of the radio button")
         } else {
           if (this.file.name) {
-            console.log(this.file.name.split(".")[this.file.name.split(".").length - 1])
             if (this.file.name.split(".")[this.file.name.split(".").length - 1] == "docx" ||
               this.file.name.split(".")[this.file.name.split(".").length - 1] == "pdf" ||
               this.file.name.split(".")[this.file.name.split(".").length - 1] == "doc") {
@@ -135,56 +163,28 @@ export class FileComponent implements OnInit {
                 (event: any) => {
                   if (event.fileName) {
                     this.fileModelData.fileName = event.fileName;
+                    // debugger
                     if (this.defaultFlag) {
                       this.fileModelData.list = "Default"
+                      this.postprocessCall()
                     } else {
                       this.fileModelData.list = "Add your own";
-
-                      this.temp.map(x => {
-                        if (!this.fileModelData.listArray) {
-                          this.fileModelData.listArray = [x]
-                        } else {
-                          this.fileModelData.listArray.push(x);
-                        }
-
-                      })
+                      if (!this.temp.length) {
+                        alert("Trigger List is Empty");
+                      } else {
+                        this.temp.map(x => {
+                          if (!this.fileModelData.listArray) {
+                            this.fileModelData.listArray = [x]
+                          } else {
+                            this.fileModelData.listArray.push(x);
+                          }
+                          this.postprocessCall()
+                        })
+                      }
                     }
-                    if (this.fileModelData.radioBoolean !== "Download") {
-                      console.log("File Download")
-                      this.fileModelData.download = false;
-                      this.fileModelData.editable = true;
 
-                    }
-                    if (this.fileModelData.radioBoolean !== "Display") {
-                      // if (!this.fileModelData.editable) {
-                      console.log("File editable")
-                      this.fileModelData.editable = false;
-                      this.fileModelData.download = true;
-                    }
-                    this.fileService.process(this.fileModelData)
-                      .subscribe((response: any) => {
-                        this.loading = !this.loading;
-                        // to navigate on next page
-                        if (response.downloadFileName && !response.editableFileName) {
-                          this.router.navigate(['/download/'], {
-                            queryParams: { "fileName": response.downloadFileName }
-                          })
-                        } else if (response.editableFileName && !response.downloadFileName) {
-                          // console.log(fileN)
-                          this.router.navigate(['/annotate/'], {
-
-                            queryParams: { "fileName": response.editableFileName }
-                          })
-                        } else {
-                          console.log("TO DOOO");
-                          alert("Something went worng! Please try again later");
-                        }
-                      }, (error: HttpErrorResponse) => {
-                        console.log(error);
-                        alert("Something went worng! Please try again later");
-                        // Handle error
-                        // Use if conditions to check error code, this depends on your api, how it sends error messages
-                      })
+                  } else {
+                    alert("Something went wrong");
                   }
                 },
                 (error: HttpErrorResponse) => {
@@ -207,6 +207,53 @@ export class FileComponent implements OnInit {
       alert("Please Select file and then click upload")
     }
 
+  }
+
+  postprocessCall() {
+    if (this.stopWordList.length) {
+      this.stopWordList.map(x => {
+        if (!this.fileModelData.stopWordListArray) {
+          this.fileModelData.stopWordListArray = [x];
+        } else {
+          this.fileModelData.stopWordListArray.push(x)
+        }
+      });
+    }
+    if (this.fileModelData.radioBoolean !== "Download") {
+      console.log("File Download")
+      this.fileModelData.download = false;
+      this.fileModelData.editable = true;
+
+    }
+    if (this.fileModelData.radioBoolean !== "Display") {
+      // if (!this.fileModelData.editable) {
+      console.log("File editable")
+      this.fileModelData.editable = false;
+      this.fileModelData.download = true;
+    }
+    this.fileService.process(this.fileModelData)
+      .subscribe((response: any) => {
+        this.loading = !this.loading;
+        // to navigate on next page
+        if (response.downloadFileName && !response.editableFileName) {
+          this.router.navigate(['/download/'], {
+            queryParams: { "fileName": response.downloadFileName }
+          })
+        } else if (response.editableFileName && !response.downloadFileName) {
+          // console.log(fileN)
+          this.router.navigate(['/annotate/'], {
+            queryParams: { "fileName": response.editableFileName }
+          })
+        } else {
+          console.log("TO DOOO");
+          alert("Something went worng! Please try again later");
+        }
+      }, (error: HttpErrorResponse) => {
+        console.log(error);
+        alert("Something went worng! Please try again later");
+        // Handle error
+        // Use if conditions to check error code, this depends on your api, how it sends error messages
+      })
   }
 
   onTextClick(events: any) {

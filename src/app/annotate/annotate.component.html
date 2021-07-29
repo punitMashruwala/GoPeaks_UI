@@ -33,8 +33,8 @@
                 <br>
                 <br>
                 <div class="row">
-                    <span *ngIf="this.data"> ***** Please click on the button above before selecting text to annotate!
-                        *****
+                    <span *ngIf="this.data"> <b> ***** Please click on the button above before selecting text to annotate! 
+                        ***** </b>
                     </span>
                     <br>
                     <br>
@@ -48,12 +48,19 @@
                 </div>
                 <br>
                 <br>
-                <div class="row">
-                    <button (click)="onDownloadClick()" class="btn btn-success"> Download data </button>
-                </div>
+               
             </div>
         </div>
-
+        <br>
+        <br>
+        <div class="row" >
+            <div class="col col-md"></div>
+            <div class="col col-md">
+                <button (click)="onDownloadClick()" class="btn btn-success"> Download data </button>
+            </div>
+            <div class="col col-md"></div>
+            
+        </div>
     </div>
 
 

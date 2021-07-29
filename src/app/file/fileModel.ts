@@ -3,6 +3,7 @@ export class fileModel {
     "list": string;
     "userName": string;
     "listArray": [string];
+    "stopWordListArray": [string];
     "download": boolean;
     "editable": boolean;
     "radioBoolean": string;    

@@ -1,9 +1,9 @@
 <div style="overflow: hidden;">
     <div *ngIf="!loading">
-        <div class="body">
+        <div class="body" style="padding-right: 10px;">
 
             <div class="row">
-                <div class="col col-5">
+                <div class="col col-4">
                     <div class="row" style="padding-left: 35px;">
                         Which list of Trigger words for Annotate do you want to be used in this file?
                         <div class="card-container">
@@ -26,39 +26,36 @@
                             <br> <br>
                             <div class="row" style="text-align: center; vertical-align: middle;">
                                 <div class="col col-4">
-                                    <table>
+                                    <table class="table table-bordered table-striped">
                                         <thead>
-                                            <tr><b>Name</b></tr>
+                                            <tr><b>Trigger Words</b></tr>
                                         </thead>
                                         <tbody>
                                             <tr *ngFor="let row of triggrlist; let i = index">
-                                                <!-- <td>{{i + 1}}</td> -->
                                                 <td> {{row}} </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="col col-4">
-                                    <table>
+                                    <table class="table table-bordered table-striped">
                                         <thead>
-                                            <tr><b>Name</b></tr>
+                                            <tr><b>Trigger Words</b></tr>
                                         </thead>
                                         <tbody>
                                             <tr *ngFor="let row of triggerList; let i = index">
-                                                <!-- <td>{{i + 1}}</td> -->
                                                 <td> {{row}} </td>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="col col-4">
-                                    <table>
+                                    <table class="table table-bordered table-striped">
                                         <thead>
-                                            <tr><b>Name</b></tr>
+                                            <tr><b>Trigger Words</b></tr>
                                         </thead>
                                         <tbody>
 
                                             <tr *ngFor="let row of triggerLst; let i = index">
-                                                <!-- <td>{{i + 1}}</td> -->
                                                 <td> {{row}} </td>
                                             </tr>
                                         </tbody>
@@ -69,30 +66,30 @@
                         <div class="col col-1"></div>
                     </div>
 
-                    <div *ngIf="addYourOwn" >
+                    <div *ngIf="addYourOwn">
                         <div style="text-align: center; vertical-align: middle;">
                             <span style="text-align: center"> Please enter words in text below and then click add button
                             </span>
                         </div>
 
-                        
+
                         <br>
                         <div class="row">
                             <div class="col col-md"> </div>
                             <div class="col col-md">
                                 <input type="text" id="triggerword" name="triggerword" [(ngModel)]="triggerword">
-                                
+
                             </div>
                             <div class="col col-md">
                                 <button (click)="onAddToListClick()" class="btn btn-primary">Add</button>
                             </div>
                             <div class="col col-md"></div>
-                            
+
 
                         </div>
                         <!-- style="text-align: center; vertical-align: middle;" -->
                         <small style="color: red;padding-left: 20%;">
-                                    * You can add multiple words using " , " (comma)  </small>
+                            * You can add multiple words using " , " (comma) </small>
 
 
                         <br>
@@ -101,13 +98,13 @@
                         <div class="row">
                             <div class="col col-md"> </div>
                             <div class="col col-md">
-                                <table>
+                                <table class="table table-bordered table-striped"
+                                    style="text-align: center; width: 200px">
                                     <thead>
-                                        <td> <b>Name</b></td>
+                                        <tr><b>Trigger Words</b></tr>
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let row of temp; let i = index">
-                                            <!-- <td>{{i + 1}}</td> -->
                                             <td> {{row}} </td>
                                         </tr>
                                     </tbody>
@@ -120,8 +117,59 @@
                     </div>
                 </div>
 
-                <div class="col col-1"></div>
-                <div class="col col-5">
+                <div class="col col-4">
+                    <div style="left: 50%;">
+                        <div class="card card-small" tabindex="0" style="left: 25%;">
+                            <span> Stop Word List </span>
+                        </div>
+                        <div style="text-align: center; vertical-align: middle;">
+                            <span style="text-align: center"> Please enter words in text below and then click add button
+                            </span>
+                        </div>
+
+
+                        <br>
+                        <div class="row">
+                            <div class="col col-md"> </div>
+                            <div class="col col-md">
+                                <input type="text" id="stoppedword" name="stoppedword" [(ngModel)]="stoppedword">
+
+                            </div>
+                            <div class="col col-md">
+                                <button (click)="onAddToStopListClick()" class="btn btn-primary">Add</button>
+                            </div>
+                            <div class="col col-md"></div>
+
+
+                        </div>
+                        <!-- style="text-align: center; vertical-align: middle;" -->
+                        <small style="color: red;padding-left: 20%;">
+                            * You can add multiple words using " , " (comma) </small>
+                        <br>
+                        <br>
+
+                        <div class="row">
+                            <div class="col col-md"> </div>
+                            <div class="col col-md">
+                                <table class="table table-bordered table-striped"
+                                    style="text-align: center; width: 200px ;">
+                                    <thead style="padding: 10%;">
+                                        <tr><b>Stopped Words</b></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style=" padding: 10%;" *ngFor="let row of stopWordList; let i = index">
+                                            <td> {{row}} </td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <div class="col col-md"> </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col col-4">
                     <div class="content" role="main">
                         <h3>Upload the file which needs to be <b> Annotated</b></h3>
                         <br>
@@ -148,7 +196,7 @@
                                         ng-control="Download" [(ngModel)]="fileModelData.radioBoolean">
                                     <!-- [(ngModel)]="fileModelData.download"> -->
                                     <label for="Download"> Download word docx</label> &nbsp; &nbsp; &nbsp;
-
+                                    <br>
                                     <input type="radio" id="Display" name="radioData" value="Display"
                                         ng-control="Display" [(ngModel)]="fileModelData.radioBoolean">
                                     <!-- [(ngModel)]="fileModelData.editable"> -->
@@ -173,7 +221,7 @@
 
                     </div>
                 </div>
-                <div class="col col-1"></div>
+
             </div>
 
         </div>

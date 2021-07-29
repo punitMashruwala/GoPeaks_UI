@@ -51,10 +51,8 @@ export class AnnotateComponent implements OnInit {
       }
       this.arraylength = this.dataArray.length;
       this.dataArray.forEach(element => {
-        console.log(element)
         element = element.replace("<p>", "");
         element = element.replace("</p>", "");
-        console.log(element)
       });
       this.dataArray = this.dataArray;
     });
@@ -70,13 +68,13 @@ export class AnnotateComponent implements OnInit {
     let target = event.currentTarget;
     let idAttr = target.attributes.id;
     let id = Number(idAttr.nodeValue);
-    console.log(id);
+    console.log("debugger - ", id);
     this.id = id;
     this.data = this.dataArray[id]
   }
 
   onRemoveClick(id: any) {
-    console.log(id)
+    console.log("debugger id - ", id)
     this.dataArray.splice(id, 1);
     this.arraylength = this.dataArray.length;
   }
@@ -84,11 +82,7 @@ export class AnnotateComponent implements OnInit {
 
   onTextClick(events: any) {
     var selObj = window.getSelection();
-    console.log(selObj!.toString())
     this.old_sentence = selObj!.toString();
-    console.log(this.causeFlag)
-    console.log(this.outcomeFlag)
-    console.log("-------- this.old_sentence -----------", this.old_sentence)
     debugger;
     if (this.causeFlag) {
       this.word = "cause";

@@ -84,3 +84,16 @@
     margin-left: 72px;
   }
 }
+
+table {
+  width: 100px;
+}
+
+.table td  {
+  padding: 10%;
+}
+
+tbody {
+  overflow: hidden;
+  height:fit-content
+}
