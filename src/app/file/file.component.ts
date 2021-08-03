@@ -213,11 +213,19 @@ export class FileComponent implements OnInit {
     if (this.stopWordList.length) {
       this.stopWordList.map(x => {
         if (!this.fileModelData.stopWordListArray) {
-          this.fileModelData.stopWordListArray = [x];
+          this.fileModelData.stopWordListArray = [x.trim()];
         } else {
-          this.fileModelData.stopWordListArray.push(x)
+          this.fileModelData.stopWordListArray.push(x.trim())
         }
       });
+    } else {
+      if (!this.fileModelData.stopWordListArray) {
+        this.fileModelData.stopWordListArray = ["as well"];
+        this.fileModelData.stopWordListArray.push("as well as")
+      } else {
+        if (this.fileModelData.stopWordListArray.indexOf("as well") == -1) this.fileModelData.stopWordListArray.push("as well")
+        this.fileModelData.stopWordListArray.push("as well as")
+      }
     }
     if (this.fileModelData.radioBoolean !== "Download") {
       console.log("File Download")

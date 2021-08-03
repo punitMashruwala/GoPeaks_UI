@@ -177,8 +177,9 @@
                         <small style="color: red;">* The software now only accepts pdf and word docx </small>
                         <br><br>
                         <div class="row">
-                            <div class="col col-sm-7"> <span>User-name:</span> &nbsp; <input type="text" id="userName"
-                                    name="userName" [(ngModel)]="fileModelData.userName">
+                            <div class="col col-sm-7"> <small style="color: red;padding-left: 20%;"> * </small> &nbsp;
+                                <span>User-name: </span> &nbsp;
+                                <input type="text" id="userName" name="userName" [(ngModel)]="fileModelData.userName">
                             </div>
                             <div class="col col-sm-5"> <small style="color: blue;">This name will be added as the
                                     document name </small>
@@ -191,6 +192,7 @@
                         <br><br>
                         <div class="row">
                             <div style="display: inline-block;">
+                                <small style="color: red;padding-left: 20%;"> *  Please select any one option</small>
                                 <form action="">
                                     <input type="radio" id="Download" name="radioData" value="Download"
                                         ng-control="Download" [(ngModel)]="fileModelData.radioBoolean">

@@ -14,7 +14,7 @@ import { FileSaverService } from 'ngx-filesaver';
 export class AnnotateComponent implements OnInit {
 
   dataArray = [''];
-  dataArray_backup = [''];
+  dataArray_history = [""];
   param1: string = "";
 
   data: string = "";
@@ -27,6 +27,11 @@ export class AnnotateComponent implements OnInit {
   outcomeFlag = false; // Flag variable
 
   arraylength = 0;
+  undo_index = 0
+  undoFlag = false;
+
+  redo_index = 0
+  redoFlag = false;
 
   constructor(private fileService: FileService, private route: ActivatedRoute, private _sanitizer: DomSanitizer, private fileSaverService: FileSaverService) {
     this.route.queryParams.subscribe(params => {
@@ -68,13 +73,13 @@ export class AnnotateComponent implements OnInit {
     let target = event.currentTarget;
     let idAttr = target.attributes.id;
     let id = Number(idAttr.nodeValue);
-    console.log("debugger - ", id);
     this.id = id;
     this.data = this.dataArray[id]
+    this.dataArray_history = [];
+    this.undo_index = 0;
   }
 
   onRemoveClick(id: any) {
-    console.log("debugger id - ", id)
     this.dataArray.splice(id, 1);
     this.arraylength = this.dataArray.length;
   }
@@ -83,17 +88,24 @@ export class AnnotateComponent implements OnInit {
   onTextClick(events: any) {
     var selObj = window.getSelection();
     this.old_sentence = selObj!.toString();
-    debugger;
-    if (this.causeFlag) {
-      this.word = "cause";
-      this.new_sentence = `<font style="color:green;"> &lt;${this.word}&gt ${this.old_sentence} &lt/${this.word}&gt </font>`;
-    } else if (this.outcomeFlag) {
-      this.word = "outcome";
-      this.new_sentence = `<font style="color:blue;"> &lt;${this.word}&gt ${this.old_sentence} &lt/${this.word}&gt </font>`;
+    if (this.old_sentence != "") {
+      if (this.causeFlag) {
+        this.word = "cause";
+        this.new_sentence = `<font style="color:green;"> &lt;${this.word}&gt ${this.old_sentence} &lt/${this.word}&gt </font>`;
+      } else if (this.outcomeFlag) {
+        this.word = "outcome";
+        this.new_sentence = `<font style="color:blue;"> &lt;${this.word}&gt ${this.old_sentence} &lt/${this.word}&gt </font>`;
+      }
+      if (this.undo_index == 0) {
+        this.dataArray_history = [this.data];
+        this.redoFlag = false
+      }
+      this.data = this.data.replace(this.old_sentence, this.new_sentence);
+      this.dataArray_history.push(this.data);
+      this.undo_index += 1;
+      this.undoFlag = true;
+      this.word = "";
     }
-    this.word = "";
-    this.data = this.data.replace(this.old_sentence, this.new_sentence);
-
   };
 
 
@@ -131,8 +143,33 @@ export class AnnotateComponent implements OnInit {
       document.body.appendChild(downloadLink);
       downloadLink.click();
     });
+  }
 
+  onUndoClick() {
+    console.log(this.dataArray_history)
+    this.undo_index = this.undo_index - 1;
+    if (this.undo_index >= 0) {
+      this.data = this.dataArray_history[this.undo_index];
+      if (this.undo_index == 0) {
+        this.undoFlag = false;
+      }
+      if (this.undo_index < this.dataArray_history.length) {
+        this.redoFlag = true;
+      }
+    } else {
+      this.undo_index = 0;
+    }
+  }
 
+  onRedoClick() {
+    if (this.undo_index < this.dataArray_history.length) {
+      this.undo_index = this.undo_index + 1;
+      this.data = this.dataArray_history[this.undo_index];
+      if (this.undo_index == this.dataArray_history.length - 1) {
+        this.redoFlag = false;
+      }
+      this.undoFlag = true;
+    }
   }
 
 }
