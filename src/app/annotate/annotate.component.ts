@@ -16,6 +16,7 @@ export class AnnotateComponent implements OnInit {
   dataArray = [''];
   dataArray_history = [""];
   param1: string = "";
+  tagName: string = "";
 
   data: string = "";
   old_sentence: string = '';
@@ -25,13 +26,20 @@ export class AnnotateComponent implements OnInit {
   word: string = "";
   causeFlag = true;
   outcomeFlag = false; // Flag variable
+  addYourOwn = false;
 
   arraylength = 0;
+  totalArraylength = "0";
   undo_index = 0
   undoFlag = false;
 
   redo_index = 0
   redoFlag = false;
+  tagFlag = false;
+
+  causeButtonColor: string = "#007bff"
+  outcomeButtonColor: string = "#007bff"
+  addButtonColor: string = "#007bff"
 
   constructor(private fileService: FileService, private route: ActivatedRoute, private _sanitizer: DomSanitizer, private fileSaverService: FileSaverService) {
     this.route.queryParams.subscribe(params => {
@@ -54,6 +62,8 @@ export class AnnotateComponent implements OnInit {
       if (this.dataArray[0].indexOf("10K")) {
         this.dataArray.splice(0, 1);
       }
+      this.totalArraylength = this.dataArray[this.dataArray.length - 1]
+      this.dataArray.splice(this.dataArray.length - 1, 1);
       this.arraylength = this.dataArray.length;
       this.dataArray.forEach(element => {
         element = element.replace("<p>", "");
@@ -72,9 +82,10 @@ export class AnnotateComponent implements OnInit {
 
     let target = event.currentTarget;
     let idAttr = target.attributes.id;
-    let id = Number(idAttr.nodeValue);
-    this.id = id;
-    this.data = this.dataArray[id]
+    this.id = Number(idAttr.nodeValue);
+    this.data = this.dataArray[this.id]
+    this.dataArray[this.id] = "<div style='background-color:silver;'>" + this.data + "</div>"
+    console.log(this.dataArray[this.id])
     this.dataArray_history = [];
     this.undo_index = 0;
   }
@@ -95,33 +106,61 @@ export class AnnotateComponent implements OnInit {
       } else if (this.outcomeFlag) {
         this.word = "outcome";
         this.new_sentence = `<font style="color:blue;"> &lt;${this.word}&gt ${this.old_sentence} &lt/${this.word}&gt </font>`;
+      } else if (this.addYourOwn) {
+        if (this.tagName) {
+          this.word = this.tagName
+          this.tagName = "";
+          this.new_sentence = `<font style="color:brown;"> &lt;${this.word}&gt ${this.old_sentence} &lt/${this.word}&gt </font>`;
+        }
       }
-      if (this.undo_index == 0) {
-        this.dataArray_history = [this.data];
-        this.redoFlag = false
+      if (this.old_sentence != this.new_sentence) {
+
+        if (this.undo_index == 0) {
+          this.dataArray_history = [this.data];
+          this.redoFlag = false
+        }
+        this.data = this.data.replace(this.old_sentence, this.new_sentence);
+        this.dataArray_history.push(this.data);
+        this.undo_index += 1;
+        this.undoFlag = true;
       }
-      this.data = this.data.replace(this.old_sentence, this.new_sentence);
-      this.dataArray_history.push(this.data);
-      this.undo_index += 1;
-      this.undoFlag = true;
       this.word = "";
     }
   };
 
 
   onCauseClick() {
-    if (!this.causeFlag) {
-      this.causeFlag = true;
-      this.outcomeFlag = false;
-    }
+    this.causeFlag = true;
+    this.outcomeFlag = false;
+    this.addYourOwn = false;
+    this.tagFlag = false;
+    this.tagName = "";
+    this.causeButtonColor = "green";
+    this.addButtonColor = "#007bff";
+    this.outcomeButtonColor = "#007bff";
   }
 
   onoutcomeClick() {
-    if (!this.outcomeFlag) {
-      this.causeFlag = false;
-      this.outcomeFlag = true;
-    }
+    this.outcomeFlag = true;
+    this.causeFlag = false;
+    this.tagFlag = false;
+    this.addYourOwn = false;
+    this.tagName = "";
+    this.outcomeButtonColor = "green";
+    this.causeButtonColor = "#007bff";
+    this.addButtonColor = "#007bff";
   }
+
+  onAddYourOwnClick() {
+    this.addYourOwn = true;
+    this.causeFlag = false;
+    this.outcomeFlag = false;
+    this.tagFlag = true;
+    this.addButtonColor = "green";
+    this.causeButtonColor = "#007bff";
+    this.outcomeButtonColor = "#007bff";
+  }
+
 
   onSaveClick() {
     this.dataArray[this.id] = this.data;

@@ -277,3 +277,30 @@ footer a {
   height: 550px; 
   width: 550px; 
 }
+
+
+
+button:active{
+  background-color:green;
+  font-style: italic;
+  font-weight: bold;
+}
+
+
+button:focus{
+  background-color:green;
+  font-style: italic;
+  font-weight: bold;
+}
+
+
+/* .glow {
+  background-color:green;
+  font-style: italic;
+  font-weight: bold;
+
+}
+
+:active {
+  color: red;
+} */

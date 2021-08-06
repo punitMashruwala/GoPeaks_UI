@@ -4,11 +4,11 @@
 
             <div class="col col-md-3" style="width: 95%;left: 1%;">
                 <span> Please click on sentence to label it!
-                    <br> Total Annotate sentence are: <b>{{arraylength}} </b> <br></span>
+                    <br> Total Annotate sentence are: <b>{{arraylength}} </b> out of <b> {{totalArraylength}} </b>  <br></span>
                 <br>
                 <div class="scroll_div">
 
-                    <div *ngFor="let row of dataArray; let i = index"  style="word-wrap: break-word;">
+                    <div *ngFor="let row of dataArray; let i = index" style="word-wrap: break-word;">
                         <p id={{i}} [innerHTML]="row | noSanitize" (click)="onClick($event)"> </p>
                         <button class="btn btn-danger" (click)="onRemoveClick(i)"> Remove </button>
                         <br><br>
@@ -26,11 +26,24 @@
                     &nbsp;
                     &nbsp;
                     &nbsp;
-                    <button (click)="onCauseClick()" class="btn btn-primary">Cause</button>
+                    <button (click)="onCauseClick()" id="cause" class="btn btn-primary"
+                        [ngStyle]="{'background-color': causeButtonColor}"> Cause</button>
                     &nbsp;
                     &nbsp;
                     &nbsp;
-                    <button (click)="onoutcomeClick()" class="btn btn-primary">Outcome</button>
+                    <button (click)="onoutcomeClick()" id="outcome" class="btn btn-primary"
+                        [ngStyle]="{'background-color': outcomeButtonColor}">Outcome</button>
+                    &nbsp;
+                    &nbsp;
+                    &nbsp;
+
+                    <button (click)="onAddYourOwnClick()" id="add" class="btn btn-primary"
+                        [ngStyle]="{'background-color': addButtonColor}">Add Your Own Tag</button>
+                    &nbsp;
+                    &nbsp;
+                    <div *ngIf="tagFlag">
+                        <input type="text" placeholder="Enter Tag" id="tagName" name="tagName" [(ngModel)]="tagName">
+                    </div>
                 </div>
                 <br>
                 <br>
