@@ -1,5 +1,5 @@
 {
-  "name": "caustator",
+  "name": "gopeaks_ui",
   "version": "0.0.0",
   "engines": {
     "node": "14.x"
