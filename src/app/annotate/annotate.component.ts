@@ -85,9 +85,11 @@ export class AnnotateComponent implements OnInit {
     this.id = Number(idAttr.nodeValue);
     this.data = this.dataArray[this.id]
     this.dataArray[this.id] = "<div style='background-color:silver;'>" + this.data + "</div>"
-    console.log(this.dataArray[this.id])
+    // console.log(this.dataArray[this.id])
     this.dataArray_history = [];
     this.undo_index = 0;
+    this.undoFlag = false;
+    this.redoFlag = false
   }
 
   onRemoveClick(id: any) {
