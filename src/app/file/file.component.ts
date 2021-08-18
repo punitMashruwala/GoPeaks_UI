@@ -27,38 +27,65 @@ export class FileComponent implements OnInit {
   stoppedword: string = "";
   stopWordList: Array<string> = [];
   // userName: string = '';
-  triggrlist = [
-    "because of",
-    "as a result",
-    "thus",
-    "hence",
-    "so",
-    "as",
-    "provided that",
-    "in order to"
-  ];
+  // triggrlist = [
+  //   "because of",
+  //   "as a result",
+  //   "thus",
+  //   "hence",
+  //   "so",
+  //   "as",
+  //   "provided that",
+  //   "in order to"
+  // ];
 
-  triggerList = [
-    "given that",
+  // triggerList = [
+  //   "given that",
+  //   "cause",
+  //   "led to",
+  //   "leads to",
+  //   "leading to",
+  //   "contribute to",
+  //   "contributed to",
+  //   "contributing to"
+  // ]
+
+  // triggerLst = [
+  //   "consequently",
+  //   "therefore",
+  //   "thus",
+  //   "accordingly",
+  //   "as a consequence",
+  //   "due to",
+  //   "owing to",
+  //   "result from"
+  // ]
+
+  triggrlist = [
+    "accordingly",
+    "as",
+    "as a consequence",
+    "as a result",
+    "because of",
     "cause",
-    "led to",
-    "leads to",
-    "leading to",
+    "consequently",
     "contribute to",
     "contributed to",
-    "contributing to"
-  ]
-
-  triggerLst = [
-    "consequently",
-    "therefore",
-    "thus",
-    "accordingly",
-    "as a consequence",
+    "contributing to",
     "due to",
+    "given that",
+    "hence",
+    "in order to",
+    "leading to",
+    "leads to",
+    "led to",
     "owing to",
-    "result from"
-  ]
+    "provided that",
+    "so",
+    "result from",
+    "therefore",
+    "thus"
+  ];
+
 
   tableValue = this.triggrlist.length / 9;
   // Inject service 

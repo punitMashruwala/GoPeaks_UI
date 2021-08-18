@@ -1,11 +1,12 @@
+<br>
 <div style="overflow: hidden;">
     <div *ngIf="!loading">
-        <div class="body" style="padding-right: 10px;">
+        <div class="body" style="padding-right: 25px;">
 
             <div class="row">
                 <div class="col col-4">
                     <div class="row" style="padding-left: 35px;">
-                        Select any one option for the list of trigger words to be use
+                        Select any one option for the list of trigger words to be used
                         <div class="card-container">
                             <div class="card card-small" (click)="onDefaultClick()" tabindex="0">
                                 <span> Default List </span>
@@ -20,13 +21,15 @@
                     <div *ngIf="defaultFlag">
                         <div class="col col-1"></div>
                         <div class="col col-10">
-                            <div style="text-align: center; vertical-align: middle;">
-                                <span style="text-align: center"> Default list </span>
+                            <div class="card card-small" tabindex="0" style="left: 28%; background-color: burlywood;">
+                                <span> Default list </span>
                             </div>
+
                             <br> <br>
                             <div class="row" style="text-align: center; vertical-align: middle;">
-                                <div class="col col-4">
-                                    <table class="table table-bordered table-striped">
+                                <div class="col col-md"> </div>
+                                <div class="col col-md">
+                                    <table class="table table-bordered table-striped" style="width: 150px">
                                         <thead>
                                             <tr><b>Trigger Words</b></tr>
                                         </thead>
@@ -37,7 +40,9 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col col-4">
+                                <div class="col col-md"> </div>
+
+                                <!-- <div class="col col-4">
                                     <table class="table table-bordered table-striped">
                                         <thead>
                                             <tr><b>Trigger Words</b></tr>
@@ -60,7 +65,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="col col-1"></div>
@@ -90,8 +95,6 @@
                         <!-- style="text-align: center; vertical-align: middle;" -->
                         <small style="color: red;padding-left: 20%;">
                             * You can add multiple words using " , " (comma) </small>
-
-
                         <br>
                         <br>
 
@@ -99,7 +102,7 @@
                             <div class="col col-md"> </div>
                             <div class="col col-md">
                                 <table class="table table-bordered table-striped"
-                                    style="text-align: center; width: 200px">
+                                    style="text-align: center; width: 150px">
                                     <thead>
                                         <tr><b>Trigger Words</b></tr>
                                     </thead>
@@ -119,7 +122,7 @@
 
                 <div class="col col-4">
                     <div style="left: 50%;">
-                        <div class="card card-small" tabindex="0" style="left: 25%;">
+                        <div class="card card-small" tabindex="0" style="left: 25%; background-color: burlywood;">
                             <span> Stop Word List </span>
                         </div>
                         <div style="text-align: center; vertical-align: middle;">
@@ -152,12 +155,12 @@
                             <div class="col col-md"> </div>
                             <div class="col col-md">
                                 <table class="table table-bordered table-striped"
-                                    style="text-align: center; width: 200px ;">
+                                    style="text-align: center; width: 150px ;">
                                     <thead style="padding: 10%;">
-                                        <tr><b>Stopped Words</b></tr>
+                                        <tr><b>Stop Words</b></tr>
                                     </thead>
                                     <tbody style="height: fit-content;">
-                                        <tr  *ngFor="let row of stopWordList; let i = index">
+                                        <tr *ngFor="let row of stopWordList; let i = index">
                                             <td> {{row}} </td>
                                         </tr>
                                     </tbody>
@@ -174,43 +177,54 @@
                         <h3>Upload the file which needs to be <b> Annotated</b></h3>
                         <br>
                         <input class="form-control" type="file" (change)="onChange($event)">
-                        <small style="color: red;">* The software now only accepts pdf and word docx </small>
-                        <br><br>
+                        <small style="color: red;">* The software now only accepts pdf and word docx . </small>
+                        <br>
+                        <small style="color: red;"> If you have multiple files, please convert them into the same format
+                            (pdf or word docx), and merge into one file before uploading.
+                        </small>
+                        <br>
+                        <br>
+                        <br>
+
                         <div class="row">
-                            <div class="col col-sm-7"> 
+                            <div class="col col-md">
                                 <small style="color: red;"> * </small> &nbsp;
                                 <span>User-name: </span> &nbsp;
                                 <input type="text" id="userName" name="userName" [(ngModel)]="fileModelData.userName">
                             </div>
-                            <div class="col col-sm-5"> <small style="color: blue;">This name will be added as the
+                            <div class="col col-md"> <small style="color: blue;">This name will be added as the
                                     document name </small>
                             </div>
-
-
                         </div>
 
 
-                        <br><br>
+                        <br>
+                        <br>
+                        <br>
+
                         <div class="row">
                             <div style="display: inline-block;">
-                                <small style="color: red;"> *  Please select any one option</small>
+                                <small style="color: red;"> * Please select any one option</small>
+                                <br>
+                                <br>
                                 <form action="">
                                     <input type="radio" id="Download" name="radioData" value="Download"
                                         ng-control="Download" [(ngModel)]="fileModelData.radioBoolean">
                                     <!-- [(ngModel)]="fileModelData.download"> -->
-                                    <label for="Download"> Download word docx</label> &nbsp; &nbsp; &nbsp;
+                                    &nbsp; &nbsp;
+                                    <label for="Download"> Download word docx</label> &nbsp;
                                     <br>
                                     <input type="radio" id="Display" name="radioData" value="Display"
                                         ng-control="Display" [(ngModel)]="fileModelData.radioBoolean">
+                                    &nbsp; &nbsp;
                                     <!-- [(ngModel)]="fileModelData.editable"> -->
-                                    <label for="Display"> Display only annotated sentences to annotate it
-                                        further</label>
+                                    <label for="Display"> Display only selected sentences with trigger words to annotate
+                                        it further</label>
                                 </form>
                             </div>
-
-
                         </div>
 
+                        <br>
                         <br>
                         <div class="row">
                             <button (click)="onUpload()" class="btn btn-success" [disabled]='loading'>
@@ -266,7 +280,7 @@
             .loadingio-spinner-rolling-sysqqssruh {
                 top: 50%;
                 left: 50%;
-                width: 200px;
+                width: 150px;
                 height: 200px;
                 display: inline-block;
                 overflow: hidden;
@@ -296,6 +310,3 @@
     <br>
     <app-footer></app-footer>
 </div>
-
-
-<!-- </div> -->

@@ -16,7 +16,7 @@ app.use(express.static('./dist/caustator'));
 
 
 app.get('*', (req, res) => {
-    res.sendFile(`./dist/caustator//index.html`); // load the single view file (angular will handle the page changes on the front-end)
+    res.sendFile(`./dist/caustator/index.html`); // load the single view file (angular will handle the page changes on the front-end)
   
 });
 

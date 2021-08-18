@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-file-upload": {
+    "caustator": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-file-upload",
+            "outputPath": "dist/caustator",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -74,10 +74,10 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-file-upload:build:production"
+              "browserTarget": "caustator:build:production"
             },
             "development": {
-              "browserTarget": "angular-file-upload:build:development"
+              "browserTarget": "caustator:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -85,7 +85,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-file-upload:build"
+            "browserTarget": "caustator:build"
           }
         },
         "test": {
@@ -108,5 +108,5 @@
       }
     }
   },
-  "defaultProject": "angular-file-upload"
+  "defaultProject": "caustator"
 }

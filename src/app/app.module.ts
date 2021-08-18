@@ -18,6 +18,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 
 import { FileSaverModule } from 'ngx-filesaver';
+import { HomeComponent } from './home/home.component';
 // import { HighlightDirective } from './highlight.directive';
 
 @NgModule({
@@ -29,7 +30,8 @@ import { FileSaverModule } from 'ngx-filesaver';
     // HighlightDirective
     NoSanitizePipe,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
