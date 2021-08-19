@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
     if (window.location.href == "http://localhost:4200/" || window.location.href == "http://localhost:4200") {
       this.buttonName = "Go to Online Version";
     } else {
-      this.buttonName = "Go to Main page"
+      this.buttonName = "Use it online"
     }
   }
 
