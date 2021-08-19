@@ -31,8 +31,8 @@
 }
 
 .card.card-small {
-  height: 30px;
-  width: 200px;
+  height: 50px;
+  width: 300px;
   background-color: lightblue;
   text-emphasis-color: white;
   color: white;
